@@ -18,6 +18,7 @@
 <p align="justify">Um App de controle financeiro, onde o usuário após fazer login, terá todas as suas transações de entradas e saídas registradas sendo exibidas na tela de inicial, o App é super simples de usar, com funcinalidades que ajudam a ter uma melhor organização das finanças, o usuário vai poder registrar ou excluir uma transação financeira, também vai poder acompanhar o gráfico de transações de saídas mensalmente.</p>
 
 <h3 align="left" id="funcionalidades">Funcionalidades</h3>
+
 - [x] Fazer login na conta Google;
 - [x] Fazer login na conta Apple (disponível apenas em dispositivos Apple);
 - [x] Adicionar uma transação de entrada ou saída, por categoria;
@@ -88,5 +89,7 @@
 
 
 <h2 align="left" id="licenca">📝 Licença</h2>
+
 Este projeto esta sobe a licença [MIT](./LICENSE).
+
 Feito com ❤️ por Jailson Santos 👋🏽 [Entre em contato!](https://www.linkedin.com/in/jailson-santos-726395104/)
