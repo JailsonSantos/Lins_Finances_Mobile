@@ -1,0 +1,171 @@
+EXPO - é um framework de desenvolvimento mobile,
+que usa um mesmo código para multiplataformas
+
+expo init linsfinances
+
+configurar o Type script no projeto, ver documentação
+
+yarn add styled-components
+yarn add @types/styled-components-react-native -D
+
+- Fonts Google
+expo install expo-font @expo-google-fonts/poppins
+
+- Componente do expo que segura a splash
+expo install expo-app-loading
+
+- Biblotecas para trabalhar com tamanho de telas e fonts
+ya rn add react-native-responsive-fontsize
+
+- Site para ver o ICONS (icons.expo.fyi)
+MaterialIcons (vem por padrão no expo)
+
+
+- Biblioteca para corrigir espaçamento do header e footer do iphone 10
+yarn add react-native-iphone-x-helper
+
+- Modals em react Native
+
+
+https://docs.swmansion.com/react-native-gesture-handler/docs/next/api/gestures/native-gesture
+
+- Biblioteca React Native Gesture Handler
+usada para corrigir os comportamentos padrão dos botões 
+do Android. 
+
+NOTA: Leia o arquivo de configuração no final;
+
+Verificar se não tiver, instalar:
+expo install react-native-gesture-handler
+
+IMPORTANTE: na versão 6.0 ela já vem istalada por padrão como expo;
+
+- React Hook Form (altera os estados apenas na hora e enviar os dados, ou seja, aumenta o ganho de performance)
+yarn add react-hook-form
+
+- Schema Validation forms
+yarn add @hookform/resolvers yup
+
+- React Navigation
+yarn add @react-navigation/native
+expo install react-native-screens react-native-safe-area-context
+yarn add @react-navigation/bottom-tabs
+
+
+- Async Storage
+expo install @react-native-async-storage/async-storage
+
+- Gerador de ID único
+yarn add react-native-uuid
+
+- instalar a lib do INTL para funcionar o formatação de datas e moedas no android
+yarn add intl
+
+- Graficos ( VictoryPie)
+yarn add victory-native
+yarn add react-native-svg
+
+- Trabalhando com datas
+yarn add date-fns
+
+- Biblioteca para trabalhar com SVG
+yarn add react-native-svg-transformer
+entrar na documentação e seguir os passos pra configurar o metro.config.js
+
+GooglePlatform: App LinsFinances
+Id_cliente: 764967869998-tgvm1rj6oj3ms4vkqifk14crctd14sul.apps.googleusercontent.com
+Chave_Secreta: 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
+
+- Instalar essas 2 libs, pra sessão e autenticação com token e hash (Android)
+expo install expo-auth-session expo-random
+
+- Instalar variaveis de ambientes
+yarn add babel-plugin-inline-dotenv
+
+adicionar a configuração no babel.config.js
+ plugins: ['inline-dotenv']
+
+
+- Instalar (iOS) - só da pra testar em Dispositivo IoS.	
+expo install expo-apple-authentication
+
+
+- Stack Navigation
+yarn add @react-navigation/native-stack
+
+- Gerador de avatar por nome e 1 letra no exemplo abaixo (API)
+https://ui-avatars.com/
+ex: https://ui-avatars.com/api/?name=${name}&length=1 
+
+------------------------------
+TESTE
+Gmail
+langelalins19@gmail.com
+82415592
+------------------------------
+
+Configurar o MainActivity.java
+
+package com.gopizza;
+
+import android.os.Build;
+import android.os.Bundle;
+
+import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView; // Linha que deve ser adicionada
+
+import expo.modules.ReactActivityDelegateWrapper;
+
+public class MainActivity extends ReactActivity {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    // Set the theme to AppTheme BEFORE onCreate to support 
+    // coloring the background, status bar, and navigation bar.
+    // This is required for expo-splash-screen.
+    setTheme(R.style.AppTheme);
+    super.onCreate(null);
+  }
+
+  /**
+   * Returns the name of the main component registered from JavaScript.
+   * This is used to schedule rendering of the component.
+   */
+  @Override
+  protected String getMainComponentName() {
+    return "main";
+  }
+
+  @Override
+  protected ReactActivityDelegate createReactActivityDelegate() {
+    return new ReactActivityDelegateWrapper(this,
+      new ReactActivityDelegate(this, getMainComponentName()) {  
+        @Override // Linha que deve ser adicionada
+          protected ReactRootView createRootView() { // Linha que deve ser adicionada
+          return new RNGestureHandlerEnabledRootView(MainActivity.this); // Linha que deve ser adicionada
+        }
+      }
+    );
+  }
+
+  /**
+   * Align the back button behavior with Android S
+   * where moving root activities to background instead of finishing activities.
+   * @see <a href="https://developer.android.com/reference/android/app/Activity#onBackPressed()">onBackPressed</a>
+   */
+  @Override
+  public void invokeDefaultOnBackPressed() {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
+      if (!moveTaskToBack(false)) {
+        // For non-root activities, use the default implementation to finish them.
+        super.invokeDefaultOnBackPressed();
+      }
+      return;
+    }
+
+    // Use the default back button implementation on Android S
+    // because it's doing more than {@link Activity#moveTaskToBack} in fact.
+    super.invokeDefaultOnBackPressed();
+  }
+}

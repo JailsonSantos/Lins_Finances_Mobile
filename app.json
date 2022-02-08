@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "linsfinances",
+    "slug": "linsfinances",
+    "icon": "./assets/icon.png",
+    "scheme": "linsfinances",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.jailsonsantos.linsfinances"
+    }
+  },
+  "ios": {
+    "bundleIdentifier": "com.linsfinances",
+    "buildNumber": "1.0.0"
+  },
+  "android": {
+    "package": "com.linsfinances",
+    "versionCode": 1
+  },
+  "name": "linsfinances"
+}
