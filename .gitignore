@@ -54,4 +54,5 @@ buck-out/
 web-build/
 dist/
 
+# Variáveis de Ambiente
 .env

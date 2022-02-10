@@ -25,6 +25,7 @@ interface User {
 
 interface IAuthContextData {
   user: User;
+  token: string;
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
   singOut(): Promise<void>;
@@ -64,21 +65,20 @@ function AuthProvider({ children }: AuthProviderProps) {
         const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`);
         const userInfo = await response.json();
 
-        const userLogged = {
+        const userLoggedIn = {
           id: String(userInfo.id),
           email: userInfo.email!,
           name: userInfo.given_name!,
           photo: userInfo.picture!
         }
 
-        console.log('Aqui', userLogged);
+        console.log('Aqui', userLoggedIn);
 
         setToken(params.access_token);
-        setUser(userLogged);
+        setUser(userLoggedIn);
 
-        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLoggedIn));
         await AsyncStorage.setItem(tokenStoragekey, params.access_token);
-
       }
     } catch (error) {
       console.log(error);
@@ -101,15 +101,15 @@ function AuthProvider({ children }: AuthProviderProps) {
         const name = credential.fullName!.givenName!;
         const photo = `https://ui-avatars.com/api/?name=${name}&length=1`;
 
-        const userLogged = {
+        const userLoggedIn = {
           id: String(credential.user),
           email: credential.email!,
           name,
           photo,
         };
 
-        setUser(userLogged);
-        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
+        setUser(userLoggedIn);
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLoggedIn));
       }
 
     } catch (error) {
@@ -120,17 +120,13 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function singOut() {
-
-    //const dataKey = `@linsfinances:transactions_user:${user.id}`;
-
-
-    // AsyncStorage.removeItem(userStorageKey);
-    // AsyncStorage.removeItem(tokenStoragekey);
-
     try {
       await AuthSession.revokeAsync({ token }, { revocationEndpoint: 'https://oauth2.googleapis.com/revoke' });
       setUser({} as User);
       setToken('');
+
+      AsyncStorage.removeItem(userStorageKey);
+      AsyncStorage.removeItem(tokenStoragekey);
     } catch (error) {
       console.log(error);
     }
@@ -142,23 +138,29 @@ function AuthProvider({ children }: AuthProviderProps) {
       const tokenStoraged = await AsyncStorage.getItem(tokenStoragekey);
 
       if (userStoraged) {
-        const userLogged = JSON.parse(userStoraged) as User;
-        setUser(userLogged);
+        const userLoggedIn = JSON.parse(userStoraged) as User;
+        setUser(userLoggedIn);
       }
-
       if (tokenStoraged) {
         setToken(tokenStoraged);
       }
-
       setUserStorageLoading(false);
-
     }
     loadUserStorageDate();
 
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle, signInWithApple, singOut, userStorageLoading }} >
+    <AuthContext.Provider value={
+      {
+        user,
+        token,
+        signInWithGoogle,
+        signInWithApple,
+        singOut,
+        userStorageLoading
+      }
+    } >
       {children}
     </AuthContext.Provider >
   );

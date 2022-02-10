@@ -115,8 +115,6 @@ export function Register() {
         ...currentData
       ];
 
-      // console.log('Dados Formatados: ', dataFormatted);
-
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
 
       reset();

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "linsfinances",
+    "name": "LinsFinances",
     "slug": "linsfinances",
     "icon": "./assets/icon.png",
     "scheme": "linsfinances",
@@ -8,17 +8,18 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#5636D3"
+    },
+    "ios": {
+      "bundleIdentifier": "com.linsfinances",
+      "buildNumber": "1.0.0"
+    },
     "android": {
-      "package": "com.jailsonsantos.linsfinances"
+      "package": "com.linsfinances",
+      "versionCode": 1
     }
-  },
-  "ios": {
-    "bundleIdentifier": "com.linsfinances",
-    "buildNumber": "1.0.0"
-  },
-  "android": {
-    "package": "com.linsfinances",
-    "versionCode": 1
-  },
-  "name": "linsfinances"
+  }
 }

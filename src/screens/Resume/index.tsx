@@ -60,7 +60,7 @@ export function Resume() {
   const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([]);
 
   const theme = useTheme();
-  const { singOut, user } = useAuth();
+  const { user } = useAuth();
 
   function handleDateChance(action: 'next' | 'prev') {
     if (action === 'next') {
@@ -134,9 +134,7 @@ export function Resume() {
   return (
     <Container>
       <Header>
-        <TouchableOpacity onPress={singOut}>
-          <Title>Resumo por categoria</Title>
-        </TouchableOpacity>
+        <Title>Resumo por categoria</Title>
       </Header>
 
       {isLoading ?
